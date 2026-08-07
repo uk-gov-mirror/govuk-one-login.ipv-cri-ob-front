@@ -4,14 +4,25 @@
 
 set -euo pipefail
 
-STACK_NAME="${CFN_StackName:-${SAM_STACK_NAME:-local}}"
-ENVIRONMENT="${ENVIRONMENT:-${TEST_ENVIRONMENT:-build}}"
+STACK_NAME="${SAM_STACK_NAME:-local}}"
+AWS_REGION="${AWS_REGION:-eu-west-2}"
 
-echo "ENVIRONMENT: ${ENVIRONMENT}"
 echo "STACK_NAME: ${STACK_NAME}"
+echo "AWS_REGION: ${AWS_REGION}"
 
-APP_URL="https://review-ob.${ENVIRONMENT}.account.gov.uk"
-CORE_STUB_URL="https://test-resources.review-ob.${ENVIRONMENT}.account.gov.uk"
+get_stack_output() {
+  local stack="$1" key="$2" value
+  value=$(aws cloudformation describe-stacks \
+    --stack-name "$stack" \
+    --region "$AWS_REGION" \
+    --query "Stacks[0].Outputs[?OutputKey=='${key}'].OutputValue" \
+    --output text) || { echo "ERROR: Failed to fetch '${key}' output from '${stack}' stack"; exit 1; }
+  [[ -n "${value}" && "${value}" != "None" ]] || { echo "ERROR: Output '${key}' is missing or empty in stack '${stack}'" >&2; exit 1; }
+  printf '%s' "${value}"
+}
+
+APP_URL=$(get_stack_output "${STACK_NAME}" "APP_URL")
+CORE_STUB_URL=$(get_stack_output "test-resources" "TestHarnessExecuteUrl")
 
 export APP_URL
 export CORE_STUB_URL
