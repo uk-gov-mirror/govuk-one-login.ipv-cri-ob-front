@@ -24,6 +24,11 @@ const selectSignInMethodSchema = () =>
   })
 
 const post = (req: Request, res: Response) => {
+  if (!req.session.consentExpiresAt || Date.now() > req.session.consentExpiresAt!) {
+    res.redirect(paths.steps.consent)
+    return
+  }
+
   const result = selectSignInMethodSchema().safeParse(req.body)
   if (!result.success) {
     renderPage(req, res, zodErrorsForView(result.error, res.locals.translate))

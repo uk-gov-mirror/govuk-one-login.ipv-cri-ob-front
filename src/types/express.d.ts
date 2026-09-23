@@ -8,6 +8,7 @@ interface AppSessionData {
   bankConsentURL?: string
   bankID?: string
   bankName?: string
+  consentExpiresAt?: number
   consentID?: string
   flash?: {
     message: {

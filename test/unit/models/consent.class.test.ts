@@ -16,13 +16,15 @@ describe('ConsentResponse', () => {
         bank_consent_url: 'https://bank.example/consent',
         bank_id: 'test-bank-1',
         id: 'test-consent-id',
-        redirect_url: 'https://redirect.example/return'
+        redirect_url: 'https://redirect.example/return',
+        url_expiry_seconds: 300
       })
 
       expect(response.bankID).toBe('test-bank-1')
       expect(response.consentID).toBe('test-consent-id')
       expect(response.bankConsentURL).toEqual(new URL('https://bank.example/consent'))
       expect(response.redirectURL).toEqual(new URL('https://redirect.example/return'))
+      expect(response.urlExpirySeconds).toEqual(300)
     })
   })
 })

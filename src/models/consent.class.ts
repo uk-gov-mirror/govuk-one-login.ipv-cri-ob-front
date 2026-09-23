@@ -10,6 +10,7 @@ export interface ConsentResponseData {
   bank_id: string
   id: string
   redirect_url: string
+  url_expiry_seconds: number
 }
 
 export class ConsentRequest {
@@ -36,15 +37,29 @@ export class ConsentResponse {
   bankID: string
   consentID: string
   redirectURL: URL // where to send the user back to after they have completed the online banking journey
+  urlExpirySeconds: number
 
-  constructor(bank_consent_url: string, bank_id: string, consent_id: string, redirect_url: string) {
+  constructor(
+    bank_consent_url: string,
+    bank_id: string,
+    consent_id: string,
+    redirect_url: string,
+    url_expiry_seconds: number
+  ) {
     this.bankConsentURL = new URL(bank_consent_url)
     this.bankID = bank_id
     this.consentID = consent_id
     this.redirectURL = new URL(redirect_url)
+    this.urlExpirySeconds = url_expiry_seconds
   }
 
   static fromData(data: ConsentResponseData) {
-    return new ConsentResponse(data.bank_consent_url, data.bank_id, data.id, data.redirect_url)
+    return new ConsentResponse(
+      data.bank_consent_url,
+      data.bank_id,
+      data.id,
+      data.redirect_url,
+      data.url_expiry_seconds
+    )
   }
 }

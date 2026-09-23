@@ -125,7 +125,8 @@
           "bank_consent_url": "http://{{systemValue type='ENVIRONMENT' key='CRI_BIND_HOST'}}:{{systemValue type='ENVIRONMENT' key='CRI_PORT'}}/stubs/webhook",
           "bank_id": "{{jsonPath request.body '$.bank_id'}}",
           "id": "{{randomValue type='UUID'}}",
-          "redirect_url": "http://{{systemValue type='ENVIRONMENT' key='CRI_BIND_HOST'}}:{{systemValue type='ENVIRONMENT' key='CRI_PORT'}}/confirm-details-bank"
+          "redirect_url": "http://{{systemValue type='ENVIRONMENT' key='CRI_BIND_HOST'}}:{{systemValue type='ENVIRONMENT' key='CRI_PORT'}}/confirm-details-bank",
+          "url_expiry_seconds": 10
         },
         "transformers": ["response-template"],
         "delayDistribution": {

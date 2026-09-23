@@ -37,10 +37,9 @@ const openBankingJourney = createWizard<SessionData>(
       controller: steps.consentController
     },
     [paths.steps.selectSignInMethod]: {
-      next: [paths.steps.scanQuickResponseCode],
+      next: [paths.steps.scanQuickResponseCode, paths.steps.consent],
       prereq: { keys: ['consentID', 'bankConsentURL'], redirectTo: paths.steps.consent },
       exit: true,
-      noReturn: true,
       controller: steps.selectSignInMethodController
     },
     [paths.steps.scanQuickResponseCode]: {

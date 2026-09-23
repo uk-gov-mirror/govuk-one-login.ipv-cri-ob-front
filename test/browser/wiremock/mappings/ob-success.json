@@ -110,7 +110,8 @@
           "bank_consent_url": "http://{{systemValue type='ENVIRONMENT' key='CRI_BIND_HOST'}}:{{systemValue type='ENVIRONMENT' key='CRI_PORT'}}/stubs/webhook",
           "bank_id": "ironforge-vault",
           "id": "CONSENT-SUCCESS-UUID",
-          "redirect_url": "http://{{systemValue type='ENVIRONMENT' key='CRI_BIND_HOST'}}:{{systemValue type='ENVIRONMENT' key='CRI_PORT'}}/confirm-details-bank"
+          "redirect_url": "http://{{systemValue type='ENVIRONMENT' key='CRI_BIND_HOST'}}:{{systemValue type='ENVIRONMENT' key='CRI_PORT'}}/confirm-details-bank",
+          "url_expiry_seconds": 300
         },
         "transformers": ["response-template"]
       }
